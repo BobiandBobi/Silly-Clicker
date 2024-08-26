@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ortada Fotoğraf, Sayaç ve Sallanma Efekti</title>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            position: relative;
+            overflow: hidden;
+            font-family: 'Caveat', cursive; /* Genel yazı tipi Caveat olarak ayarlandı */
+        }
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://cdn.discordapp.com/attachments/1089593886416060476/1277755878216306731/i.png?ex=66ce5264&is=66cd00e4&hm=2a586c577c5c371988012d37bb3c194f552e6e32bcd8fae6d612a953cf6b26cb&');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            filter: brightness(70%) blur(10px); /* Arka planı tamamen bulanık ve parlak yap */
+            z-index: 0; /* İçeriğin arkasında kalmasını sağla */
+        }
+        .content {
+            position: relative;
+            z-index: 1; /* İçeriği arka planın önüne getirmek için */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center; /* İçeriği ortalamak için */
+            color: white; /* Sayacın rengini beyaz yap */
+        }
+        img {
+            max-width: 60%; /* Fotoğrafın genişliğini %60 olarak ayarladık */
+            max-height: 60%; /* Fotoğrafın yüksekliğini %60 olarak ayarladık */
+            height: auto;
+            width: auto;
+            cursor: pointer; /* Resmi tıklanabilir yapmak için imleç değişikliği */
+        }
+        .counter {
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+        @keyframes shake {
+            0% { transform: translate(1px, 1px) rotate(0deg); }
+            10% { transform: translate(-1px, -2px) rotate(-1deg); }
+            20% { transform: translate(-3px, 0px) rotate(1deg); }
+            30% { transform: translate(3px, 2px) rotate(0deg); }
+            40% { transform: translate(1px, -1px) rotate(1deg); }
+            50% { transform: translate(-1px, 2px) rotate(-1deg); }
+            60% { transform: translate(-3px, 1px) rotate(0deg); }
+            70% { transform: translate(3px, 1px) rotate(-1deg); }
+            80% { transform: translate(-1px, -1px) rotate(1deg); }
+            90% { transform: translate(1px, 2px) rotate(0deg); }
+            100% { transform: translate(1px, -2px) rotate(-1deg); }
+        }
+        .shake {
+            animation: shake 0.5s;
+            animation-iteration-count: 1;
+        }
+        .audio {
+            display: none; /* Müzik kontrol panelini gizle */
+        }
+        .footer-text {
+            position: absolute;
+            bottom: 10px; /* Sayfanın altına yakın */
+            font-size: 1.5rem;
+            color: white; /* Yazının rengini beyaz yap */
+            z-index: 1; /* İçeriğin üstünde kalmasını sağla */
+        }
+    </style>
+</head>
+<body>
+    <div class="overlay"></div> <!-- Bulanık arka plan overlay'i -->
+    <div class="content">
+        <div class="counter" id="counter">0</div>
+        <img id="image" src="https://cdn.discordapp.com/attachments/1087360252430798859/1277617448958558291/Untitled631_20231222092843.png?ex=66cdd178&is=66cc7ff8&hm=ef59b00c9a127e00643ab6984d9031e911a473c5671ddf98f6c8a72d2329fc1f" alt="Ortadaki Fotoğraf" onclick="incrementCounterAndShake()">
+    </div>
+    <div class="footer-text">This website is very good!</div> <!-- Alt yazı eklendi -->
+
+    <audio class="audio" id="background-music" loop>
+        <source src="https://cdn.discordapp.com/attachments/1089593886416060476/1277753732720758785/Silliest_Block.mp3?ex=66ce5065&is=66ccfee5&hm=b3d6ada7e3ab0123e34fe90179c534cc1dc9b50f20f2954cfc5fb1b441e82272&" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+
+    <script>
+        let counter = 0;
+
+        function incrementCounterAndShake() {
+            // Sayacı artır
+            counter++;
+            document.getElementById('counter').textContent = counter;
+
+            // Fotoğrafın kaynağını kontrol et ve güncelle
+            let image = document.getElementById('image');
+            if (counter === 1000000) {
+                image.src = 'https://cdn.discordapp.com/attachments/1187601258002001920/1212552685132320798/Untitled288_20240228191008.png?ex=66cdc270&is=66cc70f0&hm=781b2b357bdb5219251ef322c6c1b8dabcbbb8aba799cc6f68bfffdcbd055654&';
+            } else if (counter === 100000) {
+                image.src = 'https://cdn.discordapp.com/attachments/1187601258002001920/1276388419823468645/Baslksz1363_20240823065102.png?ex=66cdf619&is=66cca499&hm=6e3e26658b903fe82050645623699ab94d835adda11cd4f5f845690989ec49b9&';
+            } else if (counter === 72000) {
+                image.src = 'https://cdn.discordapp.com/attachments/1216149569843499018/1217808321000640523/Untitled36_20240213015546.png?ex=66cdc361&is=66cc71e1&hm=c0d381f7c2049b79631965f6534d781a74f4dfcedf1ab20892982919db3ceb3d&';
+            } else if (counter === 36000) {
+                image.src = 'https://cdn.discordapp.com/attachments/1216149569843499018/1274853797537120408/IMG_20240818_175114_1280_x_1281_pixel.png?ex=66cda6de&is=66cc555e&hm=74073e12c4d38891ab9c8fcf2f6f43111eef1ee9e11a2570e092fd17f55f96d6&';
+            } else if (counter === 18000) {
+                image.src = 'https://cdn.discordapp.com/attachments/1187601258002001920/1277012138807791647/26_Sem_Titulo_20240824180709.png?ex=66ce40bb&is=66ccef3b&hm=52c08fec2fd7233c6bb3e2b88ddc917930327e0f911f7fa9c06c453d1642e97f&';
+            } else if (counter === 9000) {
+                image.src = 'https://cdn.discordapp.com/attachments/1187601258002001920/1200044491302785164/Untitled36_20240125063054.png?ex=66cdbd06&is=66cc6b86&hm=1476de2d22c81ad9bda40666f23813d5f5c8f5dcac7aa45478708e4a245edb71&';
+            } else if (counter === 3000) {
+                image.src = 'https://cdn.discordapp.com/attachments/1187601258002001920/1200821598295429291/Untitled741_20240127091543.png?ex=66cdedc3&is=66cc9c43&hm=4e8251e1e36e727f7be7152c1c8796dfd8e681a4ee6be48da7dd4807ec06295a&';
+            } else if (counter === 1500) {
+                image.src = 'https://cdn.discordapp.com/attachments/1187601258002001920/1206403885581729862/Untitled36_20240211195754.png?ex=66cdcd6c&is=66cc7bec&hm=d720a44212bd271acfdd465b2449db90ab2469860ef9138159254e2727404424&';
+            } else if (counter === 900) {
+                image.src = 'https://cdn.discordapp.com/attachments/1187601258002001920/1208609355662888960/Untitled681_20240217210004.png?ex=66cdea6d&is=66cc98ed&hm=501a17be319b2e36d93fd5580f5ce5dd3e0f2176c4f876c5af10ee5712409151&';
+            } else if (counter === 300) {
+                image.src = 'https://cdn.discordapp.com/attachments/1187601258002001920/1212799158394814475/Untitled297_20240229113020.png?ex=66cdff3c&is=66ccadbc&hm=8837234008f8e013587a0032be82ca442220d36208425f3b3f7e470a3725ea8c&';
+            } else if (counter === 150) {
+                image.src = 'https://cdn.discordapp.com/attachments/1187601258002001920/1216180331774869604/269_Sem_Titulo_20240309212402.png?ex=66cdc5f2&is=66cc7472&hm=7cc00e8711c6c614fad64bf519350ee2858d4fac59c81b1ee8eb4db322f5e08e&';
+            }
+
+            // Sallanma animasyonunu başlat
+            image.classList.add('shake');
+
+            // Animasyon bittiğinde 'shake' sınıfını kaldır
+            image.addEventListener('animationend', function() {
+                image.classList.remove('shake');
+            }, { once: true });
+        }
+
+        // Müzik çalmaya başla
+        document.getElementById('background-music').play();
+    </script>
+</body>
+</html>
